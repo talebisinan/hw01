@@ -36,6 +36,13 @@ def get_teams(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Team).offset(skip).limit(limit).all()
 
 
+def delete_team(db: Session, team_id: int):
+    db_team = (db.query(models.Team).filter(models.Team.id == team_id).first())
+    db.delete(db_team)
+    db.commit()
+    return db_team
+
+
 def create_user_team(db: Session, team: schemas.TeamCreate, worker_id: int):
     db_team = models.Team(**team.dict(), owner_id=worker_id)
     db.add(db_team)

@@ -60,3 +60,8 @@ def create_team_for_user(
 def read_teams(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     teams = crud.get_teams(db, skip=skip, limit=limit)
     return teams
+
+
+@app.delete("/teams/{team_id}")
+def delete_team(team_id: int, db: Session = Depends(get_db)):
+    return crud.delete_team(db=db, team_id=team_id)
